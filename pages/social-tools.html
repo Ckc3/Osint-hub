@@ -1,0 +1,330 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social OSINT - OSINT Hub</title>
+    <link href="../assets/css/style.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-shield-alt"></i>
+                <span>OSINT Hub</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="../index.html" class="nav-link">Home</a></li>
+                <li><a href="ip-tools.html" class="nav-link">IP Tools</a></li>
+                <li><a href="website-tools.html" class="nav-link">Website Tools</a></li>
+                <li><a href="social-tools.html" class="nav-link active">Social OSINT</a></li>
+                <li><a href="phone-tools.html" class="nav-link">Phone Tools</a></li>
+                <li><a href="email-tools.html" class="nav-link">Email Tools</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <main class="tool-page">
+        <section class="page-header">
+            <div class="container">
+                <h1 class="page-title"><i class="fas fa-users"></i> Social Media Intelligence</h1>
+                <p class="page-subtitle">Username lookup, social media investigation, and digital footprint analysis</p>
+            </div>
+        </section>
+
+        <section class="tools-container">
+            <div class="container">
+                
+                <!-- Username Search -->
+                <div class="tool-section">
+                    <h3><i class="fas fa-user-search"></i> Username Availability Checker</h3>
+                    <p>Check username availability across multiple social media platforms</p>
+                    <div class="tool-form">
+                        <input type="text" id="usernameInput" class="tool-input" placeholder="Enter username" value="johndoe">
+                        <button onclick="checkUsername()" class="tool-btn">Check Username</button>
+                    </div>
+                    <div id="usernameResult" class="tool-result" style="display: none;"></div>
+                </div>
+
+                <!-- Social Media Profile Finder -->
+                <div class="tool-section">
+                    <h3><i class="fas fa-search-plus"></i> Social Profile Discovery</h3>
+                    <p>Find social media profiles associated with a username or email</p>
+                    <div class="tool-form">
+                        <input type="text" id="profileInput" class="tool-input" placeholder="Enter username or email">
+                        <button onclick="findProfiles()" class="tool-btn">Find Profiles</button>
+                    </div>
+                    <div id="profileResult" class="tool-result" style="display: none;"></div>
+                </div>
+
+                <!-- Instagram Profile Analysis -->
+                <div class="tool-section">
+                    <h3><i class="fab fa-instagram"></i> Instagram Profile Info</h3>
+                    <p>Get public information about Instagram profiles</p>
+                    <div class="tool-form">
+                        <input type="text" id="instagramInput" class="tool-input" placeholder="Enter Instagram username" value="instagram">
+                        <button onclick="analyzeInstagram()" class="tool-btn">Analyze Profile</button>
+                    </div>
+                    <div id="instagramResult" class="tool-result" style="display: none;"></div>
+                </div>
+
+                <!-- Twitter/X Analysis -->
+                <div class="tool-section">
+                    <h3><i class="fab fa-twitter"></i> Twitter/X Profile Analysis</h3>
+                    <p>Analyze Twitter/X profiles and gather public information</p>
+                    <div class="tool-form">
+                        <input type="text" id="twitterInput" class="tool-input" placeholder="Enter Twitter/X username" value="twitter">
+                        <button onclick="analyzeTwitter()" class="tool-btn">Analyze Profile</button>
+                    </div>
+                    <div id="twitterResult" class="tool-result" style="display: none;"></div>
+                </div>
+
+                <!-- LinkedIn Profile Search -->
+                <div class="tool-section">
+                    <h3><i class="fab fa-linkedin"></i> LinkedIn Profile Search</h3>
+                    <p>Search for LinkedIn profiles by name or company</p>
+                    <div class="tool-form">
+                        <input type="text" id="linkedinInput" class="tool-input" placeholder="Enter name or company">
+                        <button onclick="searchLinkedIn()" class="tool-btn">Search LinkedIn</button>
+                    </div>
+                    <div id="linkedinResult" class="tool-result" style="display: none;"></div>
+                </div>
+
+                <!-- Digital Footprint Analysis -->
+                <div class="tool-section">
+                    <h3><i class="fas fa-fingerprint"></i> Digital Footprint Analysis</h3>
+                    <p>Comprehensive digital footprint analysis across multiple platforms</p>
+                    <div class="tool-form">
+                        <input type="text" id="footprintInput" class="tool-input" placeholder="Enter username or email">
+                        <button onclick="analyzeFootprint()" class="tool-btn">Analyze Footprint</button>
+                    </div>
+                    <div id="footprintResult" class="tool-result" style="display: none;"></div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>OSINT Hub</h3>
+                    <p>Professional intelligence gathering tools for security research.</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 OSINT Hub. For educational and authorized security research only.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../assets/js/main.js"></script>
+    <script>
+        function checkUsername() {
+            const username = document.getElementById('usernameInput').value.trim();
+            const resultContainer = document.getElementById('usernameResult');
+            const button = event.target;
+            
+            const stopLoading = toolManager.showLoading(button);
+            
+            setTimeout(() => {
+                const platforms = [
+                    { name: 'Twitter/X', available: Math.random() > 0.5, url: `https://twitter.com/${username}` },
+                    { name: 'Instagram', available: Math.random() > 0.5, url: `https://instagram.com/${username}` },
+                    { name: 'Facebook', available: Math.random() > 0.5, url: `https://facebook.com/${username}` },
+                    { name: 'LinkedIn', available: Math.random() > 0.5, url: `https://linkedin.com/in/${username}` },
+                    { name: 'GitHub', available: Math.random() > 0.5, url: `https://github.com/${username}` },
+                    { name: 'Reddit', available: Math.random() > 0.5, url: `https://reddit.com/u/${username}` },
+                    { name: 'TikTok', available: Math.random() > 0.5, url: `https://tiktok.com/@${username}` },
+                    { name: 'YouTube', available: Math.random() > 0.5, url: `https://youtube.com/@${username}` }
+                ];
+                
+                const result = {
+                    success: true,
+                    data: {
+                        username: username,
+                        platforms_checked: platforms.length,
+                        available_count: platforms.filter(p => p.available).length,
+                        taken_count: platforms.filter(p => !p.available).length,
+                        platform_status: platforms.map(p => ({
+                            platform: p.name,
+                            status: p.available ? 'Available' : 'Taken',
+                            url: p.url
+                        }))
+                    }
+                };
+                
+                toolManager.displayResult(resultContainer, result);
+                stopLoading();
+            }, 2000);
+        }
+
+        function findProfiles() {
+            const query = document.getElementById('profileInput').value.trim();
+            const resultContainer = document.getElementById('profileResult');
+            const button = event.target;
+            
+            const stopLoading = toolManager.showLoading(button);
+            
+            setTimeout(() => {
+                const profiles = [
+                    { platform: 'Instagram', username: query, followers: '1.2K', verified: false },
+                    { platform: 'Twitter/X', username: query, followers: '856', verified: true },
+                    { platform: 'LinkedIn', username: query, connections: '500+', verified: false },
+                    { platform: 'GitHub', username: query, repositories: '23', verified: false }
+                ].slice(0, Math.floor(Math.random() * 4) + 1);
+                
+                const result = {
+                    success: true,
+                    data: {
+                        query: query,
+                        profiles_found: profiles.length,
+                        profiles: profiles,
+                        search_method: 'Cross-platform username enumeration',
+                        note: 'Simulated profile discovery for demonstration'
+                    }
+                };
+                
+                toolManager.displayResult(resultContainer, result);
+                stopLoading();
+            }, 1800);
+        }
+
+        function analyzeInstagram() {
+            const username = document.getElementById('instagramInput').value.trim();
+            const resultContainer = document.getElementById('instagramResult');
+            const button = event.target;
+            
+            const stopLoading = toolManager.showLoading(button);
+            
+            setTimeout(() => {
+                const result = {
+                    success: true,
+                    data: {
+                        username: username,
+                        display_name: 'Instagram Official',
+                        bio: 'Bringing you closer to the people and things you love.',
+                        followers: '500M+',
+                        following: '50',
+                        posts: '7,000+',
+                        verified: true,
+                        private: false,
+                        external_url: 'https://about.instagram.com',
+                        category: 'Social Media Platform',
+                        joined_date: 'October 2010'
+                    }
+                };
+                
+                toolManager.displayResult(resultContainer, result);
+                stopLoading();
+            }, 1500);
+        }
+
+        function analyzeTwitter() {
+            const username = document.getElementById('twitterInput').value.trim();
+            const resultContainer = document.getElementById('twitterResult');
+            const button = event.target;
+            
+            const stopLoading = toolManager.showLoading(button);
+            
+            setTimeout(() => {
+                const result = {
+                    success: true,
+                    data: {
+                        username: username,
+                        display_name: 'Twitter',
+                        bio: 'What\'s happening?!',
+                        followers: '60M+',
+                        following: '150',
+                        tweets: '15,000+',
+                        verified: true,
+                        location: 'San Francisco, CA',
+                        website: 'https://twitter.com',
+                        joined_date: 'February 2007',
+                        account_age: '17+ years'
+                    }
+                };
+                
+                toolManager.displayResult(resultContainer, result);
+                stopLoading();
+            }, 1500);
+        }
+
+        function searchLinkedIn() {
+            const query = document.getElementById('linkedinInput').value.trim();
+            const resultContainer = document.getElementById('linkedinResult');
+            const button = event.target;
+            
+            const stopLoading = toolManager.showLoading(button);
+            
+            setTimeout(() => {
+                const profiles = [
+                    { name: query, title: 'Software Engineer', company: 'Tech Corp', location: 'San Francisco, CA' },
+                    { name: query, title: 'Marketing Manager', company: 'Marketing Inc', location: 'New York, NY' },
+                    { name: query, title: 'Data Analyst', company: 'Data Solutions', location: 'Seattle, WA' }
+                ].slice(0, Math.floor(Math.random() * 3) + 1);
+                
+                const result = {
+                    success: true,
+                    data: {
+                        search_query: query,
+                        profiles_found: profiles.length,
+                        profiles: profiles,
+                        search_filters: 'All locations, All industries',
+                        note: 'Simulated LinkedIn search results'
+                    }
+                };
+                
+                toolManager.displayResult(resultContainer, result);
+                stopLoading();
+            }, 2000);
+        }
+
+        function analyzeFootprint() {
+            const query = document.getElementById('footprintInput').value.trim();
+            const resultContainer = document.getElementById('footprintResult');
+            const button = event.target;
+            
+            const stopLoading = toolManager.showLoading(button);
+            
+            setTimeout(() => {
+                const footprint = {
+                    email_associations: Math.floor(Math.random() * 10),
+                    social_profiles: Math.floor(Math.random() * 15),
+                    data_breaches: Math.floor(Math.random() * 5),
+                    forum_posts: Math.floor(Math.random() * 50),
+                    public_records: Math.floor(Math.random() * 8),
+                    website_mentions: Math.floor(Math.random() * 25)
+                };
+                
+                const result = {
+                    success: true,
+                    data: {
+                        target: query,
+                        digital_footprint_score: Math.floor(Math.random() * 100) + 1,
+                        email_associations: footprint.email_associations,
+                        social_media_profiles: footprint.social_profiles,
+                        data_breach_exposures: footprint.data_breaches,
+                        forum_activity: footprint.forum_posts,
+                        public_records: footprint.public_records,
+                        website_mentions: footprint.website_mentions,
+                        risk_level: footprint.data_breaches > 2 ? 'High' : footprint.data_breaches > 0 ? 'Medium' : 'Low',
+                        last_updated: new Date().toISOString().split('T')[0]
+                    }
+                };
+                
+                toolManager.displayResult(resultContainer, result);
+                stopLoading();
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

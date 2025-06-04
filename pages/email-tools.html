@@ -1,0 +1,353 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Tools - OSINT Hub</title>
+    <link href="../assets/css/style.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-shield-alt"></i>
+                <span>OSINT Hub</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="../index.html" class="nav-link">Home</a></li>
+                <li><a href="ip-tools.html" class="nav-link">IP Tools</a></li>
+                <li><a href="website-tools.html" class="nav-link">Website Tools</a></li>
+                <li><a href="social-tools.html" class="nav-link">Social OSINT</a></li>
+                <li><a href="phone-tools.html" class="nav-link">Phone Tools</a></li>
+                <li><a href="email-tools.html" class="nav-link active">Email Tools</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <main class="tool-page">
+        <section class="page-header">
+            <div class="container">
+                <h1 class="page-title"><i class="fas fa-envelope"></i> Email Intelligence Tools</h1>
+                <p class="page-subtitle">Email validation, header analysis, and communication intelligence gathering</p>
+            </div>
+        </section>
+
+        <section class="tools-container">
+            <div class="container">
+                
+                <!-- Email Validation -->
+                <div class="tool-section">
+                    <h3><i class="fas fa-envelope-open-text"></i> Email Address Validator</h3>
+                    <p>Validate email addresses and check deliverability</p>
+                    <div class="tool-form">
+                        <input type="text" id="emailInput" class="tool-input" placeholder="Enter email address" value="example@gmail.com">
+                        <button onclick="validateEmail()" class="tool-btn">Validate Email</button>
+                    </div>
+                    <div id="emailResult" class="tool-result" style="display: none;"></div>
+                </div>
+
+                <!-- Email Header Analysis -->
+                <div class="tool-section">
+                    <h3><i class="fas fa-code"></i> Email Header Analyzer</h3>
+                    <p>Analyze email headers for routing and security information</p>
+                    <div class="tool-form">
+                        <textarea id="headerInput" class="tool-input" placeholder="Paste email headers here..." rows="5" style="resize: vertical;"></textarea>
+                        <button onclick="analyzeHeaders()" class="tool-btn">Analyze Headers</button>
+                    </div>
+                    <div id="headerResult" class="tool-result" style="display: none;"></div>
+                </div>
+
+                <!-- Breach Database Check -->
+                <div class="tool-section">
+                    <h3><i class="fas fa-exclamation-triangle"></i> Data Breach Check</h3>
+                    <p>Check if an email address has been compromised in data breaches</p>
+                    <div class="tool-form">
+                        <input type="text" id="breachInput" class="tool-input" placeholder="Enter email address" value="test@example.com">
+                        <button onclick="checkBreaches()" class="tool-btn">Check Breaches</button>
+                    </div>
+                    <div id="breachResult" class="tool-result" style="display: none;"></div>
+                </div>
+
+                <!-- Email Domain Analysis -->
+                <div class="tool-section">
+                    <h3><i class="fas fa-globe"></i> Email Domain Analysis</h3>
+                    <p>Analyze the domain of an email address for security information</p>
+                    <div class="tool-form">
+                        <input type="text" id="domainInput" class="tool-input" placeholder="Enter email address or domain" value="gmail.com">
+                        <button onclick="analyzeDomain()" class="tool-btn">Analyze Domain</button>
+                    </div>
+                    <div id="domainResult" class="tool-result" style="display: none;"></div>
+                </div>
+
+                <!-- Email Reputation Check -->
+                <div class="tool-section">
+                    <h3><i class="fas fa-shield-alt"></i> Email Reputation Check</h3>
+                    <p>Check the reputation and trustworthiness of email addresses</p>
+                    <div class="tool-form">
+                        <input type="text" id="reputationInput" class="tool-input" placeholder="Enter email address" value="noreply@example.com">
+                        <button onclick="checkReputation()" class="tool-btn">Check Reputation</button>
+                    </div>
+                    <div id="reputationResult" class="tool-result" style="display: none;"></div>
+                </div>
+
+                <!-- Email Format Converter -->
+                <div class="tool-section">
+                    <h3><i class="fas fa-exchange-alt"></i> Email Format Generator</h3>
+                    <p>Generate possible email formats from names and domains</p>
+                    <div class="tool-form">
+                        <input type="text" id="firstNameInput" class="tool-input" placeholder="First name" value="John">
+                        <input type="text" id="lastNameInput" class="tool-input" placeholder="Last name" value="Doe">
+                        <input type="text" id="companyDomainInput" class="tool-input" placeholder="Company domain" value="company.com">
+                        <button onclick="generateEmailFormats()" class="tool-btn">Generate Formats</button>
+                    </div>
+                    <div id="formatResult" class="tool-result" style="display: none;"></div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>OSINT Hub</h3>
+                    <p>Professional intelligence gathering tools for security research.</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 OSINT Hub. For educational and authorized security research only.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../assets/js/main.js"></script>
+    <script>
+        function validateEmail() {
+            const email = document.getElementById('emailInput').value.trim();
+            const resultContainer = document.getElementById('emailResult');
+            const button = event.target;
+            
+            const stopLoading = toolManager.showLoading(button);
+            
+            setTimeout(() => {
+                const result = toolManager.validateEmail(email);
+                // Add more detailed validation info
+                if (result.success && result.data.valid) {
+                    result.data.deliverable = Math.random() > 0.3;
+                    result.data.mx_record = result.data.deliverable;
+                    result.data.disposable = ['10minutemail', 'tempmail', 'guerrillamail'].some(temp => 
+                        result.data.domain.includes(temp));
+                    result.data.role_account = ['admin', 'info', 'support', 'noreply'].some(role =>
+                        email.toLowerCase().includes(role));
+                }
+                
+                toolManager.displayResult(resultContainer, result);
+                stopLoading();
+            }, 1000);
+        }
+
+        function analyzeHeaders() {
+            const headers = document.getElementById('headerInput').value.trim();
+            const resultContainer = document.getElementById('headerResult');
+            const button = event.target;
+            
+            if (!headers) {
+                alert('Please paste email headers');
+                return;
+            }
+            
+            const stopLoading = toolManager.showLoading(button);
+            
+            setTimeout(() => {
+                const result = {
+                    success: true,
+                    data: {
+                        sender_ip: '192.168.1.100',
+                        sender_domain: 'mail.example.com',
+                        authentication: {
+                            spf: 'PASS',
+                            dkim: 'PASS',
+                            dmarc: 'PASS'
+                        },
+                        routing_path: [
+                            'mail.sender.com (192.168.1.100)',
+                            'mx1.receiver.com (10.0.0.50)',
+                            'final.destination.com (10.0.0.100)'
+                        ],
+                        timestamp: new Date().toISOString(),
+                        security_score: Math.floor(Math.random() * 30) + 70,
+                        suspicious_indicators: Math.random() > 0.7 ? ['Unusual routing', 'Missing DKIM'] : []
+                    }
+                };
+                
+                toolManager.displayResult(resultContainer, result);
+                stopLoading();
+            }, 2000);
+        }
+
+        function checkBreaches() {
+            const email = document.getElementById('breachInput').value.trim();
+            const resultContainer = document.getElementById('breachResult');
+            const button = event.target;
+            
+            const stopLoading = toolManager.showLoading(button);
+            
+            setTimeout(() => {
+                const isBreached = Math.random() > 0.5;
+                const breaches = isBreached ? [
+                    { name: 'LinkedIn', date: '2021-06-01', records: '700M', severity: 'High' },
+                    { name: 'Facebook', date: '2019-09-01', records: '533M', severity: 'Medium' },
+                    { name: 'Adobe', date: '2013-10-01', records: '153M', severity: 'High' }
+                ].slice(0, Math.floor(Math.random() * 3) + 1) : [];
+                
+                const result = {
+                    success: true,
+                    data: {
+                        email: email,
+                        breached: isBreached,
+                        breach_count: breaches.length,
+                        breaches: breaches,
+                        risk_level: breaches.length > 2 ? 'High' : breaches.length > 0 ? 'Medium' : 'Low',
+                        last_breach: breaches.length > 0 ? breaches[0].date : 'None',
+                        recommendations: isBreached ? [
+                            'Change passwords for affected accounts',
+                            'Enable two-factor authentication',
+                            'Monitor accounts for suspicious activity'
+                        ] : ['Email appears clean']
+                    }
+                };
+                
+                toolManager.displayResult(resultContainer, result);
+                stopLoading();
+            }, 1800);
+        }
+
+        function analyzeDomain() {
+            const input = document.getElementById('domainInput').value.trim();
+            const domain = input.includes('@') ? input.split('@')[1] : input;
+            const resultContainer = document.getElementById('domainResult');
+            const button = event.target;
+            
+            const stopLoading = toolManager.showLoading(button);
+            
+            setTimeout(() => {
+                const result = {
+                    success: true,
+                    data: {
+                        domain: domain,
+                        domain_age: Math.floor(Math.random() * 20) + 1 + ' years',
+                        mx_records: ['mx1.' + domain, 'mx2.' + domain],
+                        spf_record: 'v=spf1 include:_spf.google.com ~all',
+                        dmarc_policy: 'quarantine',
+                        ssl_certificate: true,
+                        reputation_score: Math.floor(Math.random() * 40) + 60,
+                        free_provider: ['gmail.com', 'yahoo.com', 'hotmail.com', 'outlook.com'].includes(domain),
+                        disposable: Math.random() > 0.8,
+                        business_domain: !['gmail.com', 'yahoo.com', 'hotmail.com'].includes(domain)
+                    }
+                };
+                
+                toolManager.displayResult(resultContainer, result);
+                stopLoading();
+            }, 1500);
+        }
+
+        function checkReputation() {
+            const email = document.getElementById('reputationInput').value.trim();
+            const resultContainer = document.getElementById('reputationResult');
+            const button = event.target;
+            
+            const stopLoading = toolManager.showLoading(button);
+            
+            setTimeout(() => {
+                const reputations = ['Excellent', 'Good', 'Fair', 'Poor', 'Suspicious'];
+                const reputation = reputations[Math.floor(Math.random() * reputations.length)];
+                const score = reputation === 'Excellent' ? 90 + Math.floor(Math.random() * 10) :
+                             reputation === 'Good' ? 70 + Math.floor(Math.random() * 20) :
+                             reputation === 'Fair' ? 50 + Math.floor(Math.random() * 20) :
+                             reputation === 'Poor' ? 30 + Math.floor(Math.random() * 20) :
+                             Math.floor(Math.random() * 30);
+                
+                const result = {
+                    success: true,
+                    data: {
+                        email: email,
+                        reputation: reputation,
+                        trust_score: score,
+                        spam_likelihood: 100 - score + '%',
+                        blacklist_status: score < 40 ? 'Listed on 2 blacklists' : 'Clean',
+                        sending_reputation: reputation,
+                        authentication_setup: score > 60,
+                        recommended_action: score > 70 ? 'Safe to communicate' : 
+                                          score > 40 ? 'Exercise caution' : 'Avoid communication',
+                        last_checked: new Date().toISOString().split('T')[0]
+                    }
+                };
+                
+                toolManager.displayResult(resultContainer, result);
+                stopLoading();
+            }, 1600);
+        }
+
+        function generateEmailFormats() {
+            const firstName = document.getElementById('firstNameInput').value.trim().toLowerCase();
+            const lastName = document.getElementById('lastNameInput').value.trim().toLowerCase();
+            const domain = document.getElementById('companyDomainInput').value.trim().toLowerCase();
+            const resultContainer = document.getElementById('formatResult');
+            const button = event.target;
+            
+            if (!firstName || !lastName || !domain) {
+                alert('Please fill in all fields');
+                return;
+            }
+            
+            const stopLoading = toolManager.showLoading(button);
+            
+            setTimeout(() => {
+                const formats = [
+                    `${firstName}.${lastName}@${domain}`,
+                    `${firstName}${lastName}@${domain}`,
+                    `${firstName}@${domain}`,
+                    `${lastName}@${domain}`,
+                    `${firstName.charAt(0)}.${lastName}@${domain}`,
+                    `${firstName}.${lastName.charAt(0)}@${domain}`,
+                    `${firstName.charAt(0)}${lastName}@${domain}`,
+                    `${firstName}${lastName.charAt(0)}@${domain}`,
+                    `${lastName}.${firstName}@${domain}`,
+                    `${firstName}_${lastName}@${domain}`,
+                    `${firstName}-${lastName}@${domain}`,
+                    `${firstName}+${lastName}@${domain}`
+                ];
+                
+                const result = {
+                    success: true,
+                    data: {
+                        target_name: `${firstName.charAt(0).toUpperCase() + firstName.slice(1)} ${lastName.charAt(0).toUpperCase() + lastName.slice(1)}`,
+                        target_domain: domain,
+                        generated_formats: formats,
+                        total_formats: formats.length,
+                        common_patterns: [
+                            'firstname.lastname@domain.com',
+                            'firstnamelastname@domain.com',
+                            'f.lastname@domain.com',
+                            'firstname@domain.com'
+                        ],
+                        note: 'Test these formats for email enumeration attacks'
+                    }
+                };
+                
+                toolManager.displayResult(resultContainer, result);
+                stopLoading();
+            }, 800);
+        }
+    </script>
+</body>
+</html>

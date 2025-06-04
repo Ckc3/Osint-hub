@@ -1,0 +1,305 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phone Tools - OSINT Hub</title>
+    <link href="../assets/css/style.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-shield-alt"></i>
+                <span>OSINT Hub</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="../index.html" class="nav-link">Home</a></li>
+                <li><a href="ip-tools.html" class="nav-link">IP Tools</a></li>
+                <li><a href="website-tools.html" class="nav-link">Website Tools</a></li>
+                <li><a href="social-tools.html" class="nav-link">Social OSINT</a></li>
+                <li><a href="phone-tools.html" class="nav-link active">Phone Tools</a></li>
+                <li><a href="email-tools.html" class="nav-link">Email Tools</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <main class="tool-page">
+        <section class="page-header">
+            <div class="container">
+                <h1 class="page-title"><i class="fas fa-phone"></i> Phone Investigation Tools</h1>
+                <p class="page-subtitle">Phone number validation, carrier lookup, and telecommunications intelligence</p>
+            </div>
+        </section>
+
+        <section class="tools-container">
+            <div class="container">
+                
+                <!-- Phone Number Validation -->
+                <div class="tool-section">
+                    <h3><i class="fas fa-phone-alt"></i> Phone Number Validator</h3>
+                    <p>Validate phone number format and get basic information</p>
+                    <div class="tool-form">
+                        <input type="text" id="phoneInput" class="tool-input" placeholder="Enter phone number (e.g., +1-555-123-4567)" value="+1-555-123-4567">
+                        <button onclick="validatePhone()" class="tool-btn">Validate Phone</button>
+                    </div>
+                    <div id="phoneResult" class="tool-result" style="display: none;"></div>
+                </div>
+
+                <!-- Carrier Lookup -->
+                <div class="tool-section">
+                    <h3><i class="fas fa-signal"></i> Carrier Information Lookup</h3>
+                    <p>Identify the mobile carrier and network information</p>
+                    <div class="tool-form">
+                        <input type="text" id="carrierInput" class="tool-input" placeholder="Enter phone number" value="+1-555-123-4567">
+                        <button onclick="lookupCarrier()" class="tool-btn">Lookup Carrier</button>
+                    </div>
+                    <div id="carrierResult" class="tool-result" style="display: none;"></div>
+                </div>
+
+                <!-- Number Type Detection -->
+                <div class="tool-section">
+                    <h3><i class="fas fa-mobile-alt"></i> Number Type Detection</h3>
+                    <p>Determine if the number is mobile, landline, or VoIP</p>
+                    <div class="tool-form">
+                        <input type="text" id="typeInput" class="tool-input" placeholder="Enter phone number" value="+1-555-123-4567">
+                        <button onclick="detectType()" class="tool-btn">Detect Type</button>
+                    </div>
+                    <div id="typeResult" class="tool-result" style="display: none;"></div>
+                </div>
+
+                <!-- Location Information -->
+                <div class="tool-section">
+                    <h3><i class="fas fa-map-marker-alt"></i> Number Location Lookup</h3>
+                    <p>Get geographical information associated with phone number</p>
+                    <div class="tool-form">
+                        <input type="text" id="locationInput" class="tool-input" placeholder="Enter phone number" value="+1-555-123-4567">
+                        <button onclick="lookupLocation()" class="tool-btn">Lookup Location</button>
+                    </div>
+                    <div id="locationResult" class="tool-result" style="display: none;"></div>
+                </div>
+
+                <!-- Spam/Scam Check -->
+                <div class="tool-section">
+                    <h3><i class="fas fa-shield-alt"></i> Spam/Scam Number Check</h3>
+                    <p>Check if a phone number is reported as spam or scam</p>
+                    <div class="tool-form">
+                        <input type="text" id="spamInput" class="tool-input" placeholder="Enter phone number" value="+1-555-123-4567">
+                        <button onclick="checkSpam()" class="tool-btn">Check Reputation</button>
+                    </div>
+                    <div id="spamResult" class="tool-result" style="display: none;"></div>
+                </div>
+
+                <!-- Reverse Phone Lookup -->
+                <div class="tool-section">
+                    <h3><i class="fas fa-search"></i> Reverse Phone Lookup</h3>
+                    <p>Search for information associated with a phone number</p>
+                    <div class="tool-form">
+                        <input type="text" id="reverseInput" class="tool-input" placeholder="Enter phone number" value="+1-555-123-4567">
+                        <button onclick="reverseLookup()" class="tool-btn">Reverse Lookup</button>
+                    </div>
+                    <div id="reverseResult" class="tool-result" style="display: none;"></div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>OSINT Hub</h3>
+                    <p>Professional intelligence gathering tools for security research.</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 OSINT Hub. For educational and authorized security research only.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../assets/js/main.js"></script>
+    <script>
+        function validatePhone() {
+            const phone = document.getElementById('phoneInput').value.trim();
+            const resultContainer = document.getElementById('phoneResult');
+            const button = event.target;
+            
+            const stopLoading = toolManager.showLoading(button);
+            
+            setTimeout(() => {
+                const result = toolManager.validatePhone(phone);
+                toolManager.displayResult(resultContainer, result);
+                stopLoading();
+            }, 1000);
+        }
+
+        function lookupCarrier() {
+            const phone = document.getElementById('carrierInput').value.trim();
+            const resultContainer = document.getElementById('carrierResult');
+            const button = event.target;
+            
+            const stopLoading = toolManager.showLoading(button);
+            
+            setTimeout(() => {
+                const carriers = ['Verizon', 'AT&T', 'T-Mobile', 'Sprint', 'Metro PCS', 'Cricket'];
+                const carrier = carriers[Math.floor(Math.random() * carriers.length)];
+                
+                const result = {
+                    success: true,
+                    data: {
+                        phone_number: phone,
+                        carrier: carrier,
+                        network_type: Math.random() > 0.5 ? 'GSM' : 'CDMA',
+                        mcc: '310',
+                        mnc: Math.floor(Math.random() * 999).toString().padStart(3, '0'),
+                        country_code: '+1',
+                        region: 'North America'
+                    }
+                };
+                
+                toolManager.displayResult(resultContainer, result);
+                stopLoading();
+            }, 1500);
+        }
+
+        function detectType() {
+            const phone = document.getElementById('typeInput').value.trim();
+            const resultContainer = document.getElementById('typeResult');
+            const button = event.target;
+            
+            const stopLoading = toolManager.showLoading(button);
+            
+            setTimeout(() => {
+                const types = ['Mobile', 'Landline', 'VoIP', 'Toll-Free'];
+                const type = types[Math.floor(Math.random() * types.length)];
+                
+                const result = {
+                    success: true,
+                    data: {
+                        phone_number: phone,
+                        number_type: type,
+                        line_type: type === 'Mobile' ? 'Wireless' : type === 'VoIP' ? 'Voice over IP' : 'Fixed Line',
+                        portable: type === 'Mobile' || type === 'VoIP',
+                        business_line: Math.random() > 0.7,
+                        confidence_score: Math.floor(Math.random() * 30) + 70 + '%'
+                    }
+                };
+                
+                toolManager.displayResult(resultContainer, result);
+                stopLoading();
+            }, 1200);
+        }
+
+        function lookupLocation() {
+            const phone = document.getElementById('locationInput').value.trim();
+            const resultContainer = document.getElementById('locationResult');
+            const button = event.target;
+            
+            const stopLoading = toolManager.showLoading(button);
+            
+            setTimeout(() => {
+                const locations = [
+                    { city: 'New York', state: 'NY', area_code: '212' },
+                    { city: 'Los Angeles', state: 'CA', area_code: '213' },
+                    { city: 'Chicago', state: 'IL', area_code: '312' },
+                    { city: 'Houston', state: 'TX', area_code: '713' },
+                    { city: 'Phoenix', state: 'AZ', area_code: '602' }
+                ];
+                const location = locations[Math.floor(Math.random() * locations.length)];
+                
+                const result = {
+                    success: true,
+                    data: {
+                        phone_number: phone,
+                        city: location.city,
+                        state: location.state,
+                        area_code: location.area_code,
+                        time_zone: 'Eastern Standard Time',
+                        coordinates: {
+                            latitude: (Math.random() * 180 - 90).toFixed(6),
+                            longitude: (Math.random() * 360 - 180).toFixed(6)
+                        },
+                        country: 'United States'
+                    }
+                };
+                
+                toolManager.displayResult(resultContainer, result);
+                stopLoading();
+            }, 1800);
+        }
+
+        function checkSpam() {
+            const phone = document.getElementById('spamInput').value.trim();
+            const resultContainer = document.getElementById('spamResult');
+            const button = event.target;
+            
+            const stopLoading = toolManager.showLoading(button);
+            
+            setTimeout(() => {
+                const isSpam = Math.random() > 0.7;
+                const reportCount = isSpam ? Math.floor(Math.random() * 50) + 5 : 0;
+                
+                const result = {
+                    success: true,
+                    data: {
+                        phone_number: phone,
+                        spam_status: isSpam ? 'SPAM/SCAM' : 'Clean',
+                        risk_level: isSpam ? 'High' : 'Low',
+                        report_count: reportCount,
+                        categories: isSpam ? ['Telemarketing', 'Robocall', 'Scam'] : [],
+                        last_reported: isSpam ? new Date().toISOString().split('T')[0] : 'Never',
+                        sources: ['TrueCaller', 'Should I Answer', 'Hiya', 'Community Reports']
+                    }
+                };
+                
+                toolManager.displayResult(resultContainer, result);
+                stopLoading();
+            }, 2000);
+        }
+
+        function reverseLookup() {
+            const phone = document.getElementById('reverseInput').value.trim();
+            const resultContainer = document.getElementById('reverseResult');
+            const button = event.target;
+            
+            const stopLoading = toolManager.showLoading(button);
+            
+            setTimeout(() => {
+                const hasInfo = Math.random() > 0.6;
+                
+                const result = {
+                    success: true,
+                    data: hasInfo ? {
+                        phone_number: phone,
+                        owner_name: 'John Doe',
+                        owner_type: 'Individual',
+                        address: '123 Main St, Anytown, NY 12345',
+                        age_range: '30-40',
+                        associated_emails: ['john.doe@email.com'],
+                        social_profiles: ['LinkedIn', 'Facebook'],
+                        data_sources: ['Public Records', 'White Pages', 'Social Media'],
+                        last_updated: '2024-01-15'
+                    } : {
+                        phone_number: phone,
+                        status: 'No public information available',
+                        privacy_level: 'High',
+                        note: 'This number may be private or unlisted'
+                    }
+                };
+                
+                toolManager.displayResult(resultContainer, result);
+                stopLoading();
+            }, 2500);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,390 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IP Tools - OSINT Hub</title>
+    <link href="../assets/css/style.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-shield-alt"></i>
+                <span>OSINT Hub</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="../index.html" class="nav-link">Home</a></li>
+                <li><a href="ip-tools.html" class="nav-link active">IP Tools</a></li>
+                <li><a href="website-tools.html" class="nav-link">Website Tools</a></li>
+                <li><a href="social-tools.html" class="nav-link">Social OSINT</a></li>
+                <li><a href="phone-tools.html" class="nav-link">Phone Tools</a></li>
+                <li><a href="email-tools.html" class="nav-link">Email Tools</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <main class="tool-page">
+        <section class="page-header">
+            <div class="container">
+                <h1 class="page-title"><i class="fas fa-network-wired"></i> IP Analysis Tools</h1>
+                <p class="page-subtitle">Comprehensive IP address investigation and network analysis</p>
+            </div>
+        </section>
+
+        <section class="tools-container">
+            <div class="container">
+                
+                <!-- IP Geolocation Tool -->
+                <div class="tool-section">
+                    <h3><i class="fas fa-map-marker-alt"></i> IP Geolocation Lookup</h3>
+                    <p>Get detailed geographical and ISP information for any IP address</p>
+                    <div class="tool-form">
+                        <input type="text" id="ipInput" class="tool-input" placeholder="Enter IP address (e.g., 8.8.8.8)" value="8.8.8.8">
+                        <button onclick="performIPLookup()" class="tool-btn">Lookup IP</button>
+                    </div>
+                    <div id="ipResult" class="tool-result" style="display: none;"></div>
+                </div>
+
+                <!-- Port Scanner -->
+                <div class="tool-section">
+                    <h3><i class="fas fa-door-open"></i> Port Scanner</h3>
+                    <p>Scan for open ports on a target host</p>
+                    <div class="tool-form">
+                        <input type="text" id="hostInput" class="tool-input" placeholder="Enter hostname/IP" value="google.com">
+                        <input type="text" id="portsInput" class="tool-input" placeholder="Ports (e.g., 80,443,22)" value="80,443,22,21,25">
+                        <button onclick="performPortScan()" class="tool-btn">Scan Ports</button>
+                    </div>
+                    <div id="portResult" class="tool-result" style="display: none;"></div>
+                </div>
+
+                <!-- Subnet Calculator -->
+                <div class="tool-section">
+                    <h3><i class="fas fa-calculator"></i> Subnet Calculator</h3>
+                    <p>Calculate subnet information and IP ranges</p>
+                    <div class="tool-form">
+                        <input type="text" id="subnetInput" class="tool-input" placeholder="Enter CIDR (e.g., 192.168.1.0/24)" value="192.168.1.0/24">
+                        <button onclick="calculateSubnet()" class="tool-btn">Calculate</button>
+                    </div>
+                    <div id="subnetResult" class="tool-result" style="display: none;"></div>
+                </div>
+
+                <!-- IP Range Generator -->
+                <div class="tool-section">
+                    <h3><i class="fas fa-list-ol"></i> IP Range Generator</h3>
+                    <p>Generate IP addresses within a specified range</p>
+                    <div class="tool-form">
+                        <input type="text" id="startIP" class="tool-input" placeholder="Start IP (e.g., 192.168.1.1)" value="192.168.1.1">
+                        <input type="text" id="endIP" class="tool-input" placeholder="End IP (e.g., 192.168.1.10)" value="192.168.1.10">
+                        <button onclick="generateIPRange()" class="tool-btn">Generate Range</button>
+                    </div>
+                    <div id="rangeResult" class="tool-result" style="display: none;"></div>
+                </div>
+
+                <!-- Ping Tool -->
+                <div class="tool-section">
+                    <h3><i class="fas fa-satellite-dish"></i> Network Connectivity Test</h3>
+                    <p>Simulate network connectivity testing</p>
+                    <div class="tool-form">
+                        <input type="text" id="pingInput" class="tool-input" placeholder="Enter hostname/IP" value="google.com">
+                        <button onclick="performPing()" class="tool-btn">Test Connection</button>
+                    </div>
+                    <div id="pingResult" class="tool-result" style="display: none;"></div>
+                </div>
+
+                <!-- IP Reputation Check -->
+                <div class="tool-section">
+                    <h3><i class="fas fa-shield-alt"></i> IP Reputation Check</h3>
+                    <p>Check IP reputation and security status</p>
+                    <div class="tool-form">
+                        <input type="text" id="reputationInput" class="tool-input" placeholder="Enter IP address" value="1.1.1.1">
+                        <button onclick="checkReputation()" class="tool-btn">Check Reputation</button>
+                    </div>
+                    <div id="reputationResult" class="tool-result" style="display: none;"></div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>OSINT Hub</h3>
+                    <p>Professional intelligence gathering tools for security research.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>IP Tools</h4>
+                    <ul>
+                        <li><a href="#geolocation">Geolocation</a></li>
+                        <li><a href="#port-scan">Port Scanner</a></li>
+                        <li><a href="#subnet">Subnet Calculator</a></li>
+                        <li><a href="#reputation">Reputation Check</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 OSINT Hub. For educational and authorized security research only.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../assets/js/main.js"></script>
+    <script>
+        // IP Tools Functionality
+        async function performIPLookup() {
+            const ip = document.getElementById('ipInput').value.trim();
+            const resultContainer = document.getElementById('ipResult');
+            const button = event.target;
+            
+            if (!ip) {
+                alert('Please enter an IP address');
+                return;
+            }
+            
+            if (!isValidIP(ip)) {
+                toolManager.displayResult(resultContainer, {
+                    success: false,
+                    error: 'Please enter a valid IP address'
+                });
+                return;
+            }
+            
+            const stopLoading = toolManager.showLoading(button);
+            
+            try {
+                const response = await fetch(`https://ipapi.co/${ip}/json/`);
+                const data = await response.json();
+                
+                if (!data.error) {
+                    const result = {
+                        success: true,
+                        data: {
+                            ip: data.ip,
+                            country: data.country_name,
+                            region: data.region,
+                            city: data.city,
+                            zip: data.postal,
+                            isp: data.org,
+                            timezone: data.timezone,
+                            coordinates: `${data.latitude}, ${data.longitude}`
+                        }
+                    };
+                    toolManager.displayResult(resultContainer, result);
+                } else {
+                    toolManager.displayResult(resultContainer, {
+                        success: false,
+                        error: data.reason || 'IP lookup failed'
+                    });
+                }
+            } catch (error) {
+                toolManager.displayResult(resultContainer, {
+                    success: false,
+                    error: 'Network error - unable to lookup IP'
+                });
+            }
+            
+            stopLoading();
+        }
+
+        async function performPortScan() {
+            const host = document.getElementById('hostInput').value.trim();
+            const ports = document.getElementById('portsInput').value.trim().split(',');
+            const resultContainer = document.getElementById('portResult');
+            const button = event.target;
+            
+            if (!host || !ports.length) {
+                alert('Please enter host and ports');
+                return;
+            }
+            
+            const stopLoading = toolManager.showLoading(button);
+            const result = await toolManager.portScan(host, ports);
+            stopLoading();
+            
+            toolManager.displayResult(resultContainer, result);
+        }
+
+        function calculateSubnet() {
+            const cidr = document.getElementById('subnetInput').value.trim();
+            const resultContainer = document.getElementById('subnetResult');
+            const button = event.target;
+            
+            if (!cidr.includes('/')) {
+                alert('Please enter a valid CIDR notation (e.g., 192.168.1.0/24)');
+                return;
+            }
+            
+            const stopLoading = toolManager.showLoading(button);
+            
+            try {
+                const [network, prefixLength] = cidr.split('/');
+                const prefix = parseInt(prefixLength);
+                const hostBits = 32 - prefix;
+                const totalHosts = Math.pow(2, hostBits);
+                const usableHosts = totalHosts - 2;
+                
+                const result = {
+                    success: true,
+                    data: {
+                        network: network,
+                        prefix_length: prefix,
+                        subnet_mask: calculateSubnetMask(prefix),
+                        total_hosts: totalHosts,
+                        usable_hosts: usableHosts,
+                        first_host: incrementIP(network, 1),
+                        last_host: incrementIP(network, usableHosts),
+                        broadcast: incrementIP(network, totalHosts - 1)
+                    }
+                };
+                
+                toolManager.displayResult(resultContainer, result);
+            } catch (error) {
+                toolManager.displayResult(resultContainer, {
+                    success: false,
+                    error: 'Invalid CIDR format'
+                });
+            }
+            
+            stopLoading();
+        }
+
+        function generateIPRange() {
+            const startIP = document.getElementById('startIP').value.trim();
+            const endIP = document.getElementById('endIP').value.trim();
+            const resultContainer = document.getElementById('rangeResult');
+            const button = event.target;
+            
+            const stopLoading = toolManager.showLoading(button);
+            
+            try {
+                const start = ipToNumber(startIP);
+                const end = ipToNumber(endIP);
+                const ips = [];
+                
+                for (let i = start; i <= end && ips.length < 50; i++) {
+                    ips.push(numberToIP(i));
+                }
+                
+                const result = {
+                    success: true,
+                    data: {
+                        start_ip: startIP,
+                        end_ip: endIP,
+                        total_ips: end - start + 1,
+                        sample_ips: ips,
+                        note: ips.length === 50 ? 'Showing first 50 IPs only' : 'All IPs shown'
+                    }
+                };
+                
+                toolManager.displayResult(resultContainer, result);
+            } catch (error) {
+                toolManager.displayResult(resultContainer, {
+                    success: false,
+                    error: 'Invalid IP format'
+                });
+            }
+            
+            stopLoading();
+        }
+
+        function performPing() {
+            const host = document.getElementById('pingInput').value.trim();
+            const resultContainer = document.getElementById('pingResult');
+            const button = event.target;
+            
+            const stopLoading = toolManager.showLoading(button);
+            
+            // Simulate ping results
+            setTimeout(() => {
+                const result = {
+                    success: true,
+                    data: {
+                        host: host,
+                        status: 'Reachable (simulated)',
+                        response_time: Math.floor(Math.random() * 100) + 'ms',
+                        packets_sent: 4,
+                        packets_received: 4,
+                        packet_loss: '0%',
+                        note: 'Browser limitations prevent real ping. This is simulated data.'
+                    }
+                };
+                
+                toolManager.displayResult(resultContainer, result);
+                stopLoading();
+            }, 2000);
+        }
+
+        function checkReputation() {
+            const ip = document.getElementById('reputationInput').value.trim();
+            const resultContainer = document.getElementById('reputationResult');
+            const button = event.target;
+            
+            const stopLoading = toolManager.showLoading(button);
+            
+            // Simulate reputation check
+            setTimeout(() => {
+                const statuses = ['Clean', 'Suspicious', 'Malicious', 'Unknown'];
+                const status = statuses[Math.floor(Math.random() * statuses.length)];
+                
+                const result = {
+                    success: true,
+                    data: {
+                        ip_address: ip,
+                        reputation_status: status,
+                        threat_level: status === 'Clean' ? 'Low' : status === 'Suspicious' ? 'Medium' : 'High',
+                        last_seen: new Date().toISOString().split('T')[0],
+                        sources_checked: ['VirusTotal', 'AbuseIPDB', 'Shodan', 'ThreatMiner'],
+                        note: 'Simulated reputation data for demonstration'
+                    }
+                };
+                
+                toolManager.displayResult(resultContainer, result);
+                stopLoading();
+            }, 1500);
+        }
+
+        // Utility functions
+        function isValidIP(ip) {
+            const ipRegex = /^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
+            return ipRegex.test(ip);
+        }
+
+        function calculateSubnetMask(prefixLength) {
+            const mask = (0xffffffff << (32 - prefixLength)) >>> 0;
+            return [
+                (mask >>> 24) & 0xff,
+                (mask >>> 16) & 0xff,
+                (mask >>> 8) & 0xff,
+                mask & 0xff
+            ].join('.');
+        }
+
+        function incrementIP(ip, increment) {
+            const num = ipToNumber(ip);
+            return numberToIP(num + increment);
+        }
+
+        function ipToNumber(ip) {
+            return ip.split('.').reduce((acc, octet) => (acc << 8) + parseInt(octet), 0) >>> 0;
+        }
+
+        function numberToIP(num) {
+            return [
+                (num >>> 24) & 255,
+                (num >>> 16) & 255,
+                (num >>> 8) & 255,
+                num & 255
+            ].join('.');
+        }
+    </script>
+</body>
+</html>
